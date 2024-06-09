@@ -1,0 +1,4 @@
+docker build . -t mydocker:latest
+docker run -it --rm -p 8080:8080 mydocker:latest pwsh
+
+COPY start-polaris.ps1 /start-polaris.ps1
