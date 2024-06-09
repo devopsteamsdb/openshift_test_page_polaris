@@ -6,15 +6,15 @@ rw=randrw
 size=$size
 blocksize=64k
 ioengine=libaio
-directory=/mnt
+directory=/home/myuser/tmp
 numjobs=$numjobs
 iodepth=32
 group_reporting
 "@
 
-Set-Content "/tmp/$testname.fio" -Value $content
+Set-Content "/home/myuser/$testname.fio" -Value $content
 
-$run = fio /tmp/$testname.fio
+$run = fio /home/myuser/$testname.fio
 
 foreach ($line in $run){
     $line

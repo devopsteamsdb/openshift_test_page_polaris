@@ -9,11 +9,22 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
 # Install Polaris module
 RUN pwsh -Command "Install-Module -Name Polaris -Force -Scope AllUsers"
 
-# Copy the server script into the container
-COPY * /
-
 # Expose the port that Polaris will listen on
 EXPOSE 8080
 
 # Set the entrypoint to run the Polaris server script
-ENTRYPOINT ["pwsh", "-File", "/start-polaris.ps1"]
+ENTRYPOINT ["pwsh", "-File", "/home/myuser/start-polaris.ps1"]
+
+# Create a non-root user
+RUN useradd -m myuser
+
+# Copy the server script into the container
+COPY * /home/myuser/
+
+RUN chown -R myuser:myuser /home/myuser
+
+# Set the working directory
+WORKDIR /home/myuser
+
+# Set the user as the default
+USER myuser
