@@ -1,3 +1,6 @@
+docker build . -t mydocker:latest; clear; docker run --rm -p 8080:8080 --name mydocker -v /DockerFiles/openshift_test_page_polaris/tmp/:/home/myuser/tmp/ mydocker:latest
+
+
 docker build . -t mydocker:latest
 docker run -it --rm -p 8080:8080 devopsteamsdb/devopsteamsdb:openshift_testpage_2024_06_09_16_04
 
