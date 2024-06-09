@@ -11,6 +11,10 @@ on:
   pull_request:
     branches: [ "main" ]
 
+concurrency:
+  group: workflow-${{ github.head_ref }}
+  cancel-in-progress: true
+  
 jobs:
 
   build:
@@ -25,4 +29,18 @@ jobs:
       run: echo "::set-output name=date::$(date +'%Y_%m_%d_%H_%M')"
       
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag openshift_testpage:$(date +%s)
+      run: docker build . --file Dockerfile --tag devopsteamsdb/devopsteamsdb:openshift_testpage$(date +%s)
+
+    - name: Login to dockerhub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+    - name: Push image
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: devopsteamsdb/devopsteamsdb:openshift_testpage$(date +%s)
+        file: Dockerfile
+            
