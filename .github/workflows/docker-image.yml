@@ -44,4 +44,11 @@ jobs:
         push: true
         tags: devopsteamsdb/devopsteamsdb:openshift_testpage_${{ steps.date.outputs.date }}
         file: Dockerfile
+
+    - name: Push image
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: devopsteamsdb/devopsteamsdb:openshift_testpage_latest
+        file: Dockerfile
             
